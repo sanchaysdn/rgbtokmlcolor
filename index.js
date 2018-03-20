@@ -2,24 +2,24 @@
 Convert colors from rgba to KML or CSS hex formats.
 camille.hodoul@gmail.com
 */
-var converter = (function() {
+var converter = (function () {
     "use strict";
     var errors = Object.create(null) || {};
     errors.invOpacity = "invalid opacity value";
     errors.invComponent = "invalid component value";
     errors.nanComponent = "component is NaN";
     errors.nanOpacity = "opacity is NaN";
-    return { 
-        rgbaToHex: function(rgba) {
+    return {
+        rgbaToHex: function (rgba) {
             var comp = rgba.split(',');
             comp = comp.map(Number);
-            comp.map(function(component) {
-                if(isNaN(component)) {
-					// one of the colors or alpha is NaN
+            comp.map(function (component) {
+                if (isNaN(component)) {
+                    // one of the colors or alpha is NaN
                     throw new TypeError(errors.nanComponent);
                 }
-                else if(component < 0 || component > 255) {
-					// one of the colors or alpha isn't in range
+                else if (component < 0 || component > 255) {
+                    // one of the colors or alpha isn't in range
                     throw new Error(errors.invComponent);
                 }
             });
@@ -28,14 +28,14 @@ var converter = (function() {
                 g: comp[1] || 0,
                 b: comp[2] || 0
             };
-            
+
             var op = (typeof comp[3] !== "undefined") ? comp[3] : 1;
-            if(isNaN(op)) {
-				// opacity is NaN
+            if (isNaN(op)) {
+                // opacity is NaN
                 throw new TypeError(errors.nanOpacity);
             }
-            else if(op < 0 || op > 1) {
-				// opacity isn't in range
+            else if (op < 0 || op > 1) {
+                // opacity isn't in range
                 throw new Error(errors.invOpacity);
             }
             colors.r = colors.r.toString(16);
@@ -44,39 +44,39 @@ var converter = (function() {
             if (colors.r.length < 2) colors.r = "0" + colors.r;
             if (colors.g.length < 2) colors.g = "0" + colors.g;
             if (colors.b.length < 2) colors.b = "0" + colors.b;
-            
-            return { 
+
+            return {
                 color: colors.r + colors.g + colors.b,
                 op: op
             };
         },
-        hexToRgba: function(hex, op) {
+        hexToRgba: function (hex, op) {
             var colors = {
                 r: hex.substr(0, 2),
                 g: hex.substr(2, 2) || "00",
                 b: hex.substr(4, 2) || "00"
             };
-            if(typeof op === "undefined") {
+            if (typeof op === "undefined") {
                 op = 1;
             }
             op = Number(op);
             if (isNaN(op)) {
-				// opacity is NaN
+                // opacity is NaN
                 throw new TypeError(errors.nanOpacity);
             }
-            else if(op > 1 || op < 0) {
-				// opacity isn't in range
+            else if (op > 1 || op < 0) {
+                // opacity isn't in range
                 throw new Error(errors.invOpacity);
             }
-            for(var component in colors) {
-                if(colors.hasOwnProperty(component)) {
-                    var temp = parseInt(colors[component],16);
-                    if(isNaN(temp)) {
-						// one of the colors is NaN
+            for (var component in colors) {
+                if (colors.hasOwnProperty(component)) {
+                    var temp = parseInt(colors[component], 16);
+                    if (isNaN(temp)) {
+                        // one of the colors is NaN
                         throw new TypeError(errors.nanComponent);
                     }
-                    if(temp > 255 || temp < 0) {
-						// color isn't in range
+                    if (temp > 255 || temp < 0) {
+                        // color isn't in range
                         throw new Error(errors.invComponent);
                     }
                 }
@@ -88,16 +88,16 @@ var converter = (function() {
                 a: op
             };
         },
-        rgbaToKml: function(rgba) {
-            var comp = rgba.split(',');            
-            comp = comp.map(Number);            
-            comp.map(function(component) {
-                if(isNaN(component)) {
-					// one of the colors or alpha is NaN
+        rgbaToKml: function (rgba) {
+            var comp = rgba.split(',');
+            comp = comp.map(Number);
+            comp.map(function (component) {
+                if (isNaN(component)) {
+                    // one of the colors or alpha is NaN
                     throw new TypeError(errors.nanComponent);
                 }
-                else if(component < 0 || component > 255) {
-					// color not in range
+                else if (component < 0 || component > 255) {
+                    // color not in range
                     throw new Error(errors.invComponent);
                 }
             });
@@ -106,17 +106,17 @@ var converter = (function() {
                 g: comp[1] || 0,
                 b: comp[2] || 0
             };
-            
+
             var op = (typeof comp[3] !== "undefined") ? comp[3] : 1;
-            if(isNaN(op)) {
-				// opacity is NaN
+            if (isNaN(op)) {
+                // opacity is NaN
                 throw new TypeError(errors.nanOpacity);
             }
-            else if(op < 0 || op > 1) {
-				// opacity is not in range
+            else if (op < 0 || op > 1) {
+                // opacity is not in range
                 throw new Error(errors.invOpacity);
             }
-            op = parseInt(op * 255, 10); 
+            op = parseInt(op * 255, 10);
             op = op.toString(16);
 
             colors.b = colors.b.toString(16);
@@ -128,23 +128,23 @@ var converter = (function() {
             if (colors.r.length < 2) colors.r = "0" + colors.r;
             return op + colors.b + colors.g + colors.r;
         },
-        kmlToRgba: function(kml) {
-			
+        kmlToRgba: function (kml) {
+
             var colors = {
                 a: kml.substr(0, 2) || "FF",
                 r: kml.substr(6, 2) || "00",
                 g: kml.substr(4, 2) || "00",
                 b: kml.substr(2, 2) || "00"
             };
-			for(var component in colors) {
-                if(colors.hasOwnProperty(component)) {
-                    var temp = parseInt(colors[component],16);
-                    if(isNaN(temp)) {
-						// one of the components is NaN
+            for (var component in colors) {
+                if (colors.hasOwnProperty(component)) {
+                    var temp = parseInt(colors[component], 16);
+                    if (isNaN(temp)) {
+                        // one of the components is NaN
                         throw new TypeError(errors.nanComponent);
                     }
-                    if(temp > 255 || temp < 0) {
-						// component isn't in range
+                    if (temp > 255 || temp < 0) {
+                        // component isn't in range
                         throw new Error(errors.invComponent);
                     }
                 }
@@ -158,13 +158,41 @@ var converter = (function() {
             // avoid weird floating point things
             output.a = Math.round(output.a / 255 * 100) / 100;
             return output;
+        },
+
+        hexToRgbA: function (hex) {
+            var c;
+            if (/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)) {
+                c = hex.substring(1).split('');
+                if (c.length == 3) {
+                    c = [c[0], c[0], c[1], c[1], c[2], c[2]];
+                }
+                c = '0x' + c.join('');
+                return [(c >> 16) & 255, (c >> 8) & 255, c & 255].join(',') + ',1';
+            }
+            throw new Error('Bad Hex');
         }
+
     };
 })();
 exports.rgbaToHex = converter.rgbaToHex;
 exports.rgbaToKml = converter.rgbaToKml;
 exports.kmlToRgba = converter.kmlToRgba;
 exports.hexToRgba = converter.hexToRgba;
-if(typeof module !== "undefined") {
+exports.hexToRgbA = converter.hexToRgbA;
+if (typeof module !== "undefined") {
     module.exports = exports;
 }
+
+/* function hexToRgbA(hex) {
+    var c;
+    if (/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)) {
+        c = hex.substring(1).split('');
+        if (c.length == 3) {
+            c = [c[0], c[0], c[1], c[1], c[2], c[2]];
+        }
+        c = '0x' + c.join('');
+        return [(c >> 16) & 255, (c >> 8) & 255, c & 255].join(',') + ',1';
+    }
+    throw new Error('Bad Hex');
+} */

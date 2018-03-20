@@ -1,7 +1,7 @@
 {
-  "name": "rgbtokml",
-  "version": "1.0.0",
-  "description": "For converting rgbtokml",
+  "name": "sdn-rgbtokml",
+  "version": "1.0.1",
+  "description": "This package is for converting hextorgb & RGBtoKML color conversion.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -11,9 +11,14 @@
     "url": "git+https://github.com/sanchaysdn/rgbtokmlcolor.git"
   },
   "keywords": [
-    "Rgb",
-    "To",
+    "RGB",
+    "to",
     "KML",
+    "color",
+    "converter",
+    "HEX",
+    "to",
+    "rgb",
     "color",
     "converter"
   ],
