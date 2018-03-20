@@ -1,0 +1,26 @@
+{
+  "name": "rgbtokml",
+  "version": "1.0.0",
+  "description": "For converting rgbtokml",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sanchaysdn/rgbtokmlcolor.git"
+  },
+  "keywords": [
+    "Rgb",
+    "To",
+    "KML",
+    "color",
+    "converter"
+  ],
+  "author": "Sanchay Shukla",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sanchaysdn/rgbtokmlcolor/issues"
+  },
+  "homepage": "https://github.com/sanchaysdn/rgbtokmlcolor#readme"
+}
